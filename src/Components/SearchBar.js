@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import SearchResults from './SearchResults'
+import TrackList from './TrackList';
+import styles from '../Modules/SearchBar.module.css'
 
 function SearchBar({onSubmit}){
     const [userInput, setUserInput] = useState("");
@@ -15,6 +17,12 @@ function SearchBar({onSubmit}){
         setSearchInput(userInput);
     }
 
+    const [trackList, setTrackList] = useState([])
+
+    function addToTrackList(track){
+        setTrackList(prev => [...prev, track])
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -23,8 +31,9 @@ function SearchBar({onSubmit}){
             </form>
             
 
-            <div>
-                <SearchResults searchInput={searchInput}/>
+            <div className={styles.container}>
+                <SearchResults searchInput={searchInput} addToTrackList={addToTrackList}/>
+                <TrackList trackList={trackList} />
             </div>
         </>
     )

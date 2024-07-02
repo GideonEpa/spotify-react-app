@@ -1,0 +1,8 @@
+.container {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+}

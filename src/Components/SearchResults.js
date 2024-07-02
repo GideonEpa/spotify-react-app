@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Track from './Track';
+import styles from '../Modules/SearchResults.module.css'
 
 async function getToken(){
     const clientId = "c9ed8bd9d88641029f0d3ec68fec3403";
@@ -24,7 +25,7 @@ async function getToken(){
     }
 }
 
-function SearchResults({searchInput}){
+function SearchResults({searchInput, addToTrackList}){
     let inputTracker = searchInput;
     const[tracks, setTracks] = useState([])
 
@@ -54,11 +55,9 @@ function SearchResults({searchInput}){
                     const json = await response.json()
                     const topTen = [];
                     for (let i = 0; i <= 10; i++){
-                        topTen.push(json.tracks.items[i].name)
+                        topTen.push(json.tracks.items[i])
                     }
-                    setTracks(topTen)
-                    console.log(topTen)
-    
+                    setTracks(topTen)    
                 } catch(e) {
                     console.log(e.message)
                 }
@@ -70,11 +69,12 @@ function SearchResults({searchInput}){
 
 
     return (
-        <ul style={{listStyleType:'none'}}>
-            {tracks.map((track) =>
-            <li>{track}</li>
-            )}
-        </ul>
+        <div className={styles.searchResults}>
+            {tracks.map((track) => {
+                return <Track addToTrackList={addToTrackList} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name}/>
+                }
+            )}            
+        </div>
     )
 
     
