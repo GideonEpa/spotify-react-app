@@ -1,8 +1,27 @@
-.container {
-    width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    grid-template-columns: 1fr 1fr;
-    flex-direction: row;
+.searchField {
+    padding: 5px;
+    border-radius: 50px;
+    margin: 40px 0;
+
+    outline: 0;
+    border: 0;
+}
+
+.searchBtn {
+    border-radius: 50px;
+    margin-bottom: 50px;
+    padding: 8px 20px;
+
+    color: white;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 1px solid white;
+    outline: 0;
+
+    font-weight: 600;
+}
+
+.searchBtn:hover{
+    cursor: pointer;
+    background-color: rgb(54, 54, 54);
 }

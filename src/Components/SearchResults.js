@@ -26,12 +26,11 @@ async function getToken(){
 }
 
 function SearchResults({searchInput, addToTrackList}){
-    let inputTracker = searchInput;
     const[tracks, setTracks] = useState([])
 
     useEffect(() => {
         async function getSearchResults(input) {
-            if (input !== "") {
+            if (searchInput) {
                 // Get Credentials
                 const credentials = await getToken();
                 const tokenType = credentials['token_type'];
@@ -70,6 +69,7 @@ function SearchResults({searchInput, addToTrackList}){
 
     return (
         <div className={styles.searchResults}>
+            <h2>Results</h2>
             {tracks.map((track) => {
                 return <Track addToTrackList={addToTrackList} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name}/>
                 }

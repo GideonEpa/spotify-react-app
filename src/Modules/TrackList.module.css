@@ -1,7 +1,9 @@
 .trackList {
     width: 400px;
-    background-color: #30ff94;
+    background-color: #02a23a;
     color: white;
 
     padding: 20px 20px;
+    min-height: 100px;
+
 }
