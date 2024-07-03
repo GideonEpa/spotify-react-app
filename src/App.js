@@ -3,13 +3,13 @@ import React, {useState, useEffect} from 'react'
 import SearchBar from './Components/SearchBar';
 import SearchResults from './Components/SearchResults';
 import TrackList from './Components/TrackList';
-import authorize from './authorization';
+import { loginWithSpotify, logoutClick } from './authorization';
+import Login from './Components/Login';
 
 function App() {
   useEffect(() => {
-    if (!localStorage.getItem('access_token')){
-      authorize();
-    }
+    if(!localStorage.hasOwnProperty('access_token'))
+      loginWithSpotify();
   }, [])
 
   const accessToken = localStorage.getItem('access_token');
@@ -29,6 +29,7 @@ function App() {
   
   return (
     <div className="App">
+      <Login logout={logoutClick}/>
       <SearchBar setSearchInput={setSearchInput}/>
       <div className="list-container">
         <SearchResults accessToken={accessToken} searchInput={searchInput} addToTrackList={addToTrackList}/>
