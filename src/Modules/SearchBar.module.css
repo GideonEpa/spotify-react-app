@@ -9,7 +9,7 @@
 
 .searchBtn {
     border-radius: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 0px;
     padding: 8px 20px;
 
     color: white;
@@ -23,5 +23,5 @@
 
 .searchBtn:hover{
     cursor: pointer;
-    background-color: rgb(54, 54, 54);
+    background-color: #ffffff15;
 }

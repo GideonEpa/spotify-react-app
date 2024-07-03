@@ -19,8 +19,10 @@ function App() {
   const[searchInput, setSearchInput] = useState();
   const[trackList, setTrackList] = useState([]);
 
-  function addToTrackList(track){
-    setTrackList(prev => [...prev, track])
+  function addToTrackList(track) {
+    if (!trackList.includes(track)) {
+      setTrackList(prev => [...prev, track])
+    }
   };
 
   function removeFromTrackList(track){
@@ -31,8 +33,8 @@ function App() {
 
   return (
     <div className="App">
-      <Login logout={logoutClick}/>
       <SearchBar setSearchInput={setSearchInput}/>
+      <Login logout={logoutClick}/>
       <div className="list-container">
         <SearchResults accessToken={accessToken} searchInput={searchInput} addToTrackList={addToTrackList}/>
         <TrackList trackList={trackList} removeFromTrackList={removeFromTrackList} userData={userData} accessToken={accessToken}/>

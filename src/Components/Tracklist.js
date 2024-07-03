@@ -6,7 +6,7 @@ import createPlaylist from '../Modules/createPlaylist';
 
 
 function TrackList({trackList, removeFromTrackList, userData, accessToken}){
-    const [userInput, setUserInput] = useState("Playlist");
+    const [userInput, setUserInput] = useState("Playlist Name");
 
     function handleChange({target}){
         setUserInput(target.value)
@@ -16,13 +16,13 @@ function TrackList({trackList, removeFromTrackList, userData, accessToken}){
         createPlaylist(userData.id, accessToken, userInput, trackList);
 
     }
-
+    
     return (
         <>
         <div className={styles.trackList}>
             <input name='playlist' onChange={handleChange} className={styles.playlistInput} value={userInput} />
             {trackList.map((track, index) => {
-                return <Track key={"Track: " + index} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name} removeFromTrackList={removeFromTrackList} />
+                return <Track key={"Track: " + index} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name} removeFromTrackList={removeFromTrackList} trackSrc={track.album.images[0].url} />
                 }
             )}
             <button onClick={handleClick} className={styles.saveBtn}>Save To Spotify</button>

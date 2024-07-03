@@ -10,15 +10,12 @@ function Track(props){
         }
     }
     return (
-        <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "10px 10px",
-            borderBottom: "1px solid white"
-            }}>
-            <h3>{props.trackName}</h3>
-            <h4>{props.trackArtist} | {props.trackAlbum}</h4>
+        <div className={styles.trackCard}>
+            <img src={props.trackSrc} width={100} height="auto"/>
+            <div className={styles.text}>
+                <h3>{props.trackName}</h3>
+                <h4>{props.trackArtist} | {props.trackAlbum}</h4>
+            </div>
             <button className={styles.btn} onClick={handleClick}>{props.removeFromTrackList ? "-" : "+"}</button>
         </div>
 

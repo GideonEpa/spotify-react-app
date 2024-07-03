@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from '../Modules/Login.module.css'
 
 function Login({logout}) {
     return (
-        <button onClick={logout}>Logout</button>
+        <button className={styles.btn} onClick={logout}>Logout</button>
     )
 }
 
