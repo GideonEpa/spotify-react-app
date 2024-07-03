@@ -21,12 +21,13 @@ function TrackList({trackList, removeFromTrackList, userData, accessToken}){
         <>
         <div className={styles.trackList}>
             <input name='playlist' onChange={handleChange} className={styles.playlistInput} value={userInput} />
-            {trackList.map((track) => {
-                return <Track track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name} removeFromTrackList={removeFromTrackList} />
+            {trackList.map((track, index) => {
+                return <Track key={"Track: " + index} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name} removeFromTrackList={removeFromTrackList} />
                 }
             )}
+            <button onClick={handleClick} className={styles.saveBtn}>Save To Spotify</button>
         </div>
-        <button onClick={handleClick} className={styles.saveBtn}>Save To Spotify</button>
+        
         </>
     )
 }

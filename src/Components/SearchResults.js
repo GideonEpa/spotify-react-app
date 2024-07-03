@@ -65,8 +65,8 @@ function SearchResults({searchInput, addToTrackList, accessToken}){
     return (
         <div className={styles.searchResults}>
             <h2 className={styles.h2}>Results</h2>
-            {tracks.map((track) => {
-                return <Track addToTrackList={addToTrackList} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name}/>
+            {tracks.map((track, index) => {
+                return <Track key={"Result: " + index} addToTrackList={addToTrackList} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name}/>
                 }
             )}            
         </div>

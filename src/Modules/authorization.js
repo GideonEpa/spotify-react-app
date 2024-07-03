@@ -45,7 +45,6 @@ let userData = {};
 // If we have a token, we're logged in, so fetch user data and render logged in template
 if (currentToken.access_token) {
   userData = await getUserData();
-  console.log(userData)
   localStorage.setItem('userId', userData.id)
 }
 

@@ -16,29 +16,25 @@ async function createPlaylist(userId, accessToken, playlistName, trackList) {
     try {
         const response = await fetch(userEndpoint, payload);
         if (response.ok) {
-            console.log('Playlist successfully created!')
-            console.log('Adding Tracks now')
+            console.log('Playlist successfully created!');
+            console.log('Adding Tracks now');
 
-            console.log(response)
-            const playlistId = new URLSearchParams(response.uri)
-            const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
-            const tracksToAdd = new URLSearchParams(trackList.map(track => track.uri).join())
-            console.log(tracksToAdd);
-
+            const jsonResponse = await response.json();
+            const playlistId = jsonResponse.id;
+            const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+            const trackUris = trackList.map(track => track.uri);
 
             const payload = {
                 method:"POST",
                 headers: { 
                     'Authorization': 'Bearer ' + accessToken,
                     'Content-Type': 'application/json'
-                 },
+                },
                 body: JSON.stringify({
-                    uris: 'spotify%3Atrack%3A28wtiGfwWVdxbZDW52S3kz',
-                    position: 0
+                    uris: trackUris,
                 })
             };
 
-            console.log(playlistEndpoint, payload)
 
             try {
                 const response = await fetch(playlistEndpoint, payload);
