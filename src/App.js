@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState, useEffect} from 'react'
 import SearchBar from './Components/SearchBar';
 import SearchResults from './Components/SearchResults';
-import TrackList from './Components/TrackList';
+import TrackList from './Components/TrackList' 
 import Login from './Components/Login';
 
 import { loginWithSpotify, logoutClick, userData } from './Modules/authorization';
