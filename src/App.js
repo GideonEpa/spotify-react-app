@@ -3,8 +3,10 @@ import React, {useState, useEffect} from 'react'
 import SearchBar from './Components/SearchBar';
 import SearchResults from './Components/SearchResults';
 import TrackList from './Components/TrackList';
-import { loginWithSpotify, logoutClick } from './authorization';
 import Login from './Components/Login';
+
+import { loginWithSpotify, logoutClick, userData } from './Modules/authorization';
+
 
 function App() {
   useEffect(() => {
@@ -24,16 +26,16 @@ function App() {
   function removeFromTrackList(track){
     setTrackList(trackList.filter((arrTrack) => arrTrack !== track))
   };
-
-  const[playlistName, setPlaylistName] = useState("");
   
+  
+
   return (
     <div className="App">
       <Login logout={logoutClick}/>
       <SearchBar setSearchInput={setSearchInput}/>
       <div className="list-container">
         <SearchResults accessToken={accessToken} searchInput={searchInput} addToTrackList={addToTrackList}/>
-        <TrackList trackList={trackList} removeFromTrackList={removeFromTrackList} setPlaylistName={setPlaylistName}/>
+        <TrackList trackList={trackList} removeFromTrackList={removeFromTrackList} userData={userData} accessToken={accessToken}/>
       </div>
     </div>
   );

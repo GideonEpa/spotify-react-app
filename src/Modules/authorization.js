@@ -3,7 +3,7 @@ const redirectUrl = 'http://localhost:3000/';        // your redirect URL - must
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private';
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -41,9 +41,12 @@ if (code) {
   window.history.replaceState({}, document.title, updatedUrl);
 }
 
+let userData = {};
 // If we have a token, we're logged in, so fetch user data and render logged in template
 if (currentToken.access_token) {
-  const userData = await getUserData();
+  userData = await getUserData();
+  console.log(userData)
+  localStorage.setItem('userId', userData.id)
 }
 
 // Otherwise we're not logged in, so render the login template
@@ -143,4 +146,4 @@ async function refreshTokenClick() {
 
 }
 
-export { loginWithSpotify, logoutClick };
+export { loginWithSpotify, logoutClick, userData };
