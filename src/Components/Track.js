@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from '../Modules/Track.module.css'
 
 function Track(props){
     function handleClick(){
-        props.addToTrackList(props.track)
-
+        if (props.removeFromTrackList) {
+            props.removeFromTrackList(props.track)
+        } else {
+            props.addToTrackList(props.track)
+        }
     }
-
     return (
-        <div className={styles.track}>
-            <h2>{props.trackName}</h2>
-            <h3>{props.trackArtist} | {props.trackAlbum}</h3>
-            <button className={styles.btn} onClick={handleClick}>+</button>
+        <div className={styles.trackCard}>
+            <img src={props.trackSrc} width={100} height="auto"/>
+            <div className={styles.text}>
+                <h3>{props.trackName}</h3>
+                <h4>{props.trackArtist} | {props.trackAlbum}</h4>
+            </div>
+            <button className={styles.btn} onClick={handleClick}>{props.removeFromTrackList ? "-" : "+"}</button>
         </div>
 
     )

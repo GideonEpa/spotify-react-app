@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Track from './Track';
-import styles from '../Modules/TrackList.module.css'
+import styles from '../Modules/TrackList.module.css';
+import createPlaylist from '../Modules/createPlaylist';
 
-function TrackList({trackList}){
+
+
+function TrackList({trackList, removeFromTrackList, userData, accessToken}){
+    const [userInput, setUserInput] = useState("Playlist Name");
+
+    function handleChange({target}){
+        setUserInput(target.value)
+    };
+
+    function handleClick() {
+        createPlaylist(userData.id, accessToken, userInput, trackList);
+
+    }
+    
     return (
+        <>
         <div className={styles.trackList}>
-            {trackList.map((track) => {
-                return <Track track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name}/>
+            <input name='playlist' onChange={handleChange} className={styles.playlistInput} value={userInput} />
+            {trackList.map((track, index) => {
+                return <Track key={"Track: " + index} track={track} trackName={track.name} trackAlbum={track.album.name} trackArtist={track.artists[0].name} removeFromTrackList={removeFromTrackList} trackSrc={track.album.images[0].url} />
                 }
-            )}     
+            )}
+            <button onClick={handleClick} className={styles.saveBtn}>Save To Spotify</button>
         </div>
+        
+        </>
     )
 }
 
