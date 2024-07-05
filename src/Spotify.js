@@ -41,17 +41,7 @@ if (code) {
   window.history.replaceState({}, document.title, updatedUrl);
 }
 
-let userData = {};
-// If we have a token, we're logged in, so fetch user data and render logged in template
-if (currentToken.access_token) {
-  userData = await getUserData();
-  localStorage.setItem('userId', userData.id)
-}
 
-// Otherwise we're not logged in, so render the login template
-if (!currentToken.access_token) {
-
-}
 
 async function redirectToSpotifyAuthorize() {
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -145,4 +135,107 @@ async function refreshTokenClick() {
 
 }
 
-export { loginWithSpotify, logoutClick, userData };
+let userData = {};
+// If we have a token, we're logged in, so fetch user data and render logged in template
+if (currentToken.access_token) {
+  userData = await getUserData();
+  localStorage.setItem('userId', userData.id)
+}
+
+// Otherwise we're not logged in, so render the login template
+if (!currentToken.access_token) {
+
+}
+
+async function createPlaylist(userId, accessToken, playlistName, trackList) {
+  const userEndpoint = `https://api.spotify.com/v1/users/${userId}/playlists`
+  const payload = {
+      method:"POST",
+      headers: { 
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+       },
+      body: JSON.stringify({
+          name: `${playlistName}`,
+          description:'Enter Description!',
+          public: false
+      })
+  }
+
+  try {
+      const response = await fetch(userEndpoint, payload);
+      if (response.ok) {
+          console.log('Playlist successfully created!');
+          console.log('Adding Tracks now');
+
+          const jsonResponse = await response.json();
+          const playlistId = jsonResponse.id;
+          const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+          const trackUris = trackList.map(track => track.uri);
+
+          const payload = {
+              method:"POST",
+              headers: { 
+                  'Authorization': 'Bearer ' + accessToken,
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  uris: trackUris,
+              })
+          };
+
+
+          try {
+              const response = await fetch(playlistEndpoint, payload);
+              if (response.ok) {
+                  console.log('Tracks added successfully!')
+              }
+              throw new Error(response.status);
+
+          } catch(e) {
+              console.log(e.message)
+          }
+      }
+      throw new Error(response.status)
+  } catch(e) {
+      console.log(e.message)
+  }
+} 
+
+async function getSearchResults(searchInput) {
+  // Search Query
+  const spotifyAPIbaseURL = "https://api.spotify.com/v1/search"
+  const query = `?q=${searchInput}`
+  const searchType = `&type=track`
+  const urlToFetch = spotifyAPIbaseURL + query + searchType
+  const options = {
+      method: "GET",
+      headers: {"Authorization": "Bearer " + localStorage.getItem('access_token')}
+  }
+
+  try {
+      const response = await fetch(urlToFetch, options)
+      if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`)
+      }
+      const json = await response.json()
+      const topTen = [];
+      for (let i = 0; i <= 10; i++){
+          topTen.push(json.tracks.items[i])
+      }
+      return topTen
+  } catch(e) {
+      console.log(e.message)
+  }
+}
+
+const Spotify = {
+  loginWithSpotify,
+  refreshTokenClick,
+  logoutClick,
+  createPlaylist,
+  getSearchResults,
+  userData,
+}
+
+export default Spotify;

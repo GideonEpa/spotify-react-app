@@ -5,24 +5,44 @@
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  box-shadow: inset 0 0 0 2000px #02ff5655;
+  box-shadow: inset 0 0 0 2000px #00064c8c;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background-color: #282c345b;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  align-content: center;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.list-container {
+.title {
+  grid-column-start: 2;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.subtitle {
+  font-size: 10px;
+  margin: 0px 0px 10px;
+  padding: 0;
+}
+
+.login {
+  grid-column-start: 3;
+}
+
+/* Main Content */
+.main {
   display: flex;
   align-items: start;
   justify-content: space-around;
   padding-bottom: 100px;
 
 }
+

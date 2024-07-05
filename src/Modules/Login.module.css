@@ -1,14 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.welcome {
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .btn {
     border: 1px solid white;
-    padding: 8px 20px;
+    padding: 8px 15px;
     color: white;
     background-color: transparent;
     text-transform: uppercase;
     font-weight: 600;
-    border-radius: 50px;
-    margin-top: 20px;
-    margin-bottom: 40px;
-
+    font-size: 8px;
+    border-radius: 5px;
 }
 
 .btn:hover {

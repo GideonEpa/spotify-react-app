@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../Modules/SearchBar.module.css'
 
-function SearchBar({setSearchInput}){
+function SearchBar({submitSearch}){
     const [userInput, setUserInput] = useState("");
 
     function handleInput({target}){
@@ -10,14 +10,26 @@ function SearchBar({setSearchInput}){
 
     function handleSubmit(e){
         e.preventDefault();
-        setSearchInput(userInput);
-    }
+        submitSearch(userInput);
+    };
 
     return (
         <>
             <form autoComplete="off" onSubmit={handleSubmit}>
-                <input className={styles.searchField} name='search' value={userInput} onChange={handleInput} type="text" id="search"/> <br/>
-                <input className={styles.searchBtn} value='Search' type='submit'/>
+                <input 
+                    className={styles.searchField} 
+                    name='search'
+                    id="search" 
+                    value={userInput} 
+                    onChange={handleInput} 
+                    type="text"
+                    autoComplete='off' 
+                    /> <br/>
+                <input 
+                    className={styles.searchBtn} 
+                    value='Search' 
+                    type='submit'
+                    />
             </form>
         </>
     )
