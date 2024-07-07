@@ -160,17 +160,18 @@ async function createPlaylist(playlistName, trackList) {
        },
       body: JSON.stringify({
           name: `${playlistName}`,
-          description:'Enter Description!',
+          description:'Description',
           public: false
       })
   }
 
   try {
       const response = await fetch(userEndpoint, payload);
-      if (response.ok && !trackList) {
-          console.log('Playlist successfully created!');
-          console.log('Adding Tracks now');
-
+      if(response.ok) {
+        console.log('Playlist successfully created!');
+      }
+        
+      if(trackList.length > 0) {
           const jsonResponse = await response.json();
           const playlistId = jsonResponse.id;
           const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
@@ -188,6 +189,7 @@ async function createPlaylist(playlistName, trackList) {
           };
 
           try {
+              console.log('Adding Tracks now');
               const response = await fetch(playlistEndpoint, payload);
               if (response.ok) {
                   console.log('Tracks added successfully!')
@@ -197,8 +199,10 @@ async function createPlaylist(playlistName, trackList) {
           } catch(e) {
               console.log(e.message)
           }
+      } else {
+        console.log('Playlist Created with no Tracks')
       }
-      throw new Error(response.status)
+      
   } catch(e) {
       console.log(e.message)
   }
@@ -252,6 +256,80 @@ async function getUserPlaylists() {
   }
 }
 
+async function getPlaylistItems(playlistId) {
+  const endpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
+  const payload = {
+    headers: {'Authorization': "Bearer " + currentToken.access_token},      
+    }
+  try {
+    const response = await fetch(endpoint, payload);
+    if(!response.ok){
+      throw new Error('fetching playlist items failed! Error: ' + response.status)
+    }
+    const json = await response.json()
+
+    const playlistItems = json.items.map(track => track.track);
+    return playlistItems;
+
+  } catch(e) {
+    console.log(e.message)
+  }
+}
+
+async function addTracksToPlaylist(playlistId, trackList) {
+  const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+  const trackUris = trackList.map(track => track.uri);
+
+  const payload = {
+      method:"POST",
+      headers: { 
+          'Authorization': 'Bearer ' + currentToken.access_token,
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          uris: trackUris,
+      })
+  };
+
+  try {
+      const response = await fetch(playlistEndpoint, payload);
+      if (response.ok) {
+          console.log('Tracks added successfully!')
+      }
+      throw new Error(response.status);
+
+  } catch(e) {
+      console.log(e.message)
+  }
+
+}
+
+async function removeTracksFromPlaylist(playlistId, trackList) {
+  const playlistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+  const trackUris = trackList.map(track => { return {"uri":track.uri}});
+
+  const payload = {
+      method:"DELETE",
+      headers: { 
+          'Authorization': 'Bearer ' + currentToken.access_token,
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          tracks: trackUris,
+      })
+  };
+
+  try {
+      const response = await fetch(playlistEndpoint, payload);
+      if (response.ok) {
+          console.log('Tracks added successfully!')
+      }
+      throw new Error(response.status);
+
+  } catch(e) {
+      console.log(e.message)
+  }
+}
 
 
 // Spotify object
@@ -263,6 +341,9 @@ const Spotify = {
   getSearchResults,
   refreshToken,
   getUserPlaylists,
+  getPlaylistItems,
+  addTracksToPlaylist,
+  removeTracksFromPlaylist,
   userData,
 }
 

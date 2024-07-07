@@ -65,33 +65,82 @@ function App() {
     }
     fetchPlaylists();
   },[playlistName])
+
+  const [isEditing, setIsEditing] = useState(false)
   
   function savePlaylist() {
-    if (playlistName !== "New Playlist") {
-      Spotify.createPlaylist(  
-        playlistName.trim(), 
-        trackList);
-
-      setTimeout(() => {
-        alert(`Your playlist titled '${playlistName}' was saved to your account successfully!`)
-      }, 500);
-
-      setTrackList([])
-      setPlaylistName("Playlist Name")
+    if (!isEditing) {
+      if (playlistName !== "New Playlist") {
+        Spotify.createPlaylist(  
+          playlistName.trim(), 
+          trackList);
+  
+        setTimeout(() => {
+          alert(`Your playlist titled '${playlistName}' was saved to your account successfully!`)
+        }, 500);
+  
+        setTrackList([])
+        setPlaylistName("New Playlist")
+      } else {
+          alert('You forgot to name your playlist!')
+      }
     } else {
-        alert('You forgot to name your playlist!')
+        const tracksToAdd = trackList.filter(x => !playlistSnapshot.includes(x))
+        if (tracksToAdd.lenght > 0) {
+          Spotify.addTracksToPlaylist(
+            currentPlaylist,
+            tracksToAdd
+          )
+        } 
+        
+
+        const tracksToRemove = playlistSnapshot.filter(x => !trackList.includes(x))
+        if(tracksToRemove.length > 0) {
+          Spotify.removeTracksFromPlaylist(
+            currentPlaylist,
+            tracksToRemove
+          )
+        }
+        
+
+
+        setTimeout(() => {
+          alert(`Your playlist titled '${playlistName}' was updated successfully!`)
+        }, 500);
+        setTrackList([])
+        setPlaylistName("New Playlist")
     }
   }
 
-  function changePlaylist(playlistUri) {
+  const [currentPlaylist, setCurrentPlaylist] = useState();
+  const [playlistSnapshot, setPlaylistSnapshot] = useState()
+
+  async function changePlaylist(playlistId, playlistName) {
+    if(playlistId === 0 || playlistName === "") {
+      setIsEditing(false)
+      setTrackList([])
+      setPlaylistName('New Playlist')
+    } else {
+      setCurrentPlaylist(playlistId)
+      setIsEditing(true)
+
+      const newTracklist = await Spotify.getPlaylistItems(playlistId);
+      setPlaylistSnapshot(newTracklist)
+      setTrackList(newTracklist)
+      setPlaylistName(playlistName)
+    }
 
   }
 
   return (
     <div className="App">
       <div className="App-header">
-        <div>
-         <img src='' alt='placeholder'/>
+        <div className='Spotify-logo'>
+         <img 
+          src='https://logosmarcas.net/wp-content/uploads/2020/09/Spotify-Logo.png' alt='placeholder'
+          width='auto'
+          height={80}
+          />
         </div>
         <div className='title-text'>
           <h1 className='title'>Muse</h1>
@@ -105,13 +154,14 @@ function App() {
           />
         }
       </div>
-      <SearchBar 
-        submitSearch={submitSearch}
-        />
       <PlaylistList 
         userPlaylists={userPlaylists}
         changePlaylist={changePlaylist} 
         />
+      <SearchBar 
+        submitSearch={submitSearch}
+        />
+      
       <div className="main">
         <SearchResults 
           addToTrackList={addToTrackList}
@@ -123,6 +173,7 @@ function App() {
           savePlaylist={savePlaylist}
           renamePlaylist={renamePlaylist}
           playlistName={playlistName}
+          currentPlaylist={currentPlaylist}
           />
       </div>
     </div>

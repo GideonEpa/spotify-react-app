@@ -5,8 +5,8 @@ function PlaylistList({
     changePlaylist
     }) {
 
-    function handleClick(playlistUri){
-        changePlaylist();
+    function handleClick(playlistId, playlistName){
+        changePlaylist(playlistId, playlistName);
     }
 
     if(userPlaylists){
@@ -15,13 +15,13 @@ function PlaylistList({
                 className={styles.playlistListContainer}>
                     <h2>Playlists</h2>
                     <div className={styles.playlistShowcase}>
-                        <div id='new-playlist' className={styles.playlistCard}>
+                        <div onClick={() => handleClick(0, "")} id='new-playlist' className={styles.playlistCard}>
                             <p>+</p>
                             <h4>New Playlist</h4>
                         </div>
-                    {userPlaylists.map((playlist) => {
+                    {userPlaylists.map((playlist, i) => {
                         return (
-                        <div onClick={() => handleClick(playlist.uri)} className={styles.playlistCard}>
+                        <div key={playlist.name + ": " + i} onClick={() => handleClick(playlist.id, playlist.name)} className={styles.playlistCard}>
                             <img 
                                 width='60' 
                                 height='60' 

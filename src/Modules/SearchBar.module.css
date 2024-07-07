@@ -1,7 +1,7 @@
 .searchField {
     padding: 5px;
     border-radius: 50px;
-    margin: 40px 0;
+    margin: 10px 0 40px;
 
     outline: 0;
     border: 0;
@@ -11,7 +11,7 @@
 
 .searchBtn {
     border-radius: 50px;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     padding: 8px 20px;
 
     color: white;

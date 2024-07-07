@@ -1,6 +1,6 @@
 .playlistListContainer {
     box-sizing: border-box;
-    background-color: #0e002750;
+    background-color: #0e002746;
     color: white;
 
     padding: 10px;
@@ -33,11 +33,21 @@
     gap: 10px;
 
     cursor: pointer;
+}
 
+.playlistCard:hover {
+    transform: scale(1.04);
+    transition: all 0.1s;
 }
 
 .playlistCard img {
     border-radius: 10px;
+}
+
+.playlistCard img:hover {
+    box-shadow: 0px 0px 10px #ffffff85;
+    transition: all 0.2s;
+
 }
 
 .playlistCard h4 {
