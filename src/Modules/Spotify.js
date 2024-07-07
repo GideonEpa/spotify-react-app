@@ -3,7 +3,7 @@ const redirectUrl = 'http://localhost:3000/';        // your redirect URL - must
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-const scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private';
+const scope = 'user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private';
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -107,6 +107,7 @@ async function refreshToken() {
     }),
   });
 
+
   return await response.json();
 }
 
@@ -147,7 +148,9 @@ if (!currentToken.access_token) {
 
 }
 
-async function createPlaylist(userId, accessToken, playlistName, trackList) {
+async function createPlaylist(playlistName, trackList) {
+  const userId = localStorage.getItem('userId')
+  const accessToken = currentToken.access_token
   const userEndpoint = `https://api.spotify.com/v1/users/${userId}/playlists`
   const payload = {
       method:"POST",
@@ -164,7 +167,7 @@ async function createPlaylist(userId, accessToken, playlistName, trackList) {
 
   try {
       const response = await fetch(userEndpoint, payload);
-      if (response.ok) {
+      if (response.ok && !trackList) {
           console.log('Playlist successfully created!');
           console.log('Adding Tracks now');
 
@@ -183,7 +186,6 @@ async function createPlaylist(userId, accessToken, playlistName, trackList) {
                   uris: trackUris,
               })
           };
-
 
           try {
               const response = await fetch(playlistEndpoint, payload);
@@ -229,12 +231,38 @@ async function getSearchResults(searchInput) {
   }
 }
 
+// Get users playlists
+async function getUserPlaylists() {
+  const playlistEndpoint = 'https://api.spotify.com/v1/me/playlists'
+  const payload = {
+    headers: {'Authorization': "Bearer " + currentToken.access_token},      
+    }
+  try {
+    const response = await fetch(playlistEndpoint, payload);
+    if(!response.ok){
+      throw new Error('fetching playlists failed! Error: ' + response.status)
+    }
+    const json = await response.json()
+    const userPlaylists = json.items;
+
+    return userPlaylists
+
+  } catch(e) {
+    console.log(e.message)
+  }
+}
+
+
+
+// Spotify object
 const Spotify = {
   loginWithSpotify,
   refreshTokenClick,
   logoutClick,
   createPlaylist,
   getSearchResults,
+  refreshToken,
+  getUserPlaylists,
   userData,
 }
 

@@ -23,7 +23,8 @@ function SearchBar({submitSearch}){
                     value={userInput} 
                     onChange={handleInput} 
                     type="text"
-                    autoComplete='off' 
+                    autoComplete='off'
+                    placeholder='Track, Album, or Artist' 
                     /> <br/>
                 <input 
                     className={styles.searchBtn} 

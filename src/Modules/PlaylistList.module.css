@@ -1,0 +1,54 @@
+.playlistListContainer {
+    box-sizing: border-box;
+    background-color: #0e002750;
+    color: white;
+
+    padding: 10px;
+    margin: 20px 35px 30px;
+    border-radius: 10px;
+    min-height: 80px;
+    height: auto;
+}
+
+.playlistListContainer h2 {
+    padding: 0;
+    margin: 0;
+}
+
+.playlistShowcase {
+    display: flex;
+    justify-content: start;
+    gap: 30px;
+    padding: 20px 30px;
+
+    overflow-x: scroll;
+}
+
+
+.playlistCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+
+    cursor: pointer;
+
+}
+
+.playlistCard img {
+    border-radius: 10px;
+}
+
+.playlistCard h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.playlistCard p {
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
+    margin: 0;
+    padding: 0;
+}
