@@ -1,3 +1,4 @@
+import React from 'react';
 import Track from './Track.js';
 import styles from '../Modules/TrackList.module.css';
 
@@ -31,6 +32,6 @@ function TrackList({
                 className={styles.saveBtn}>Save To Spotify</button>
         </div>
     )
-}
+};
 
 export default TrackList;

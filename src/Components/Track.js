@@ -36,7 +36,6 @@ function Track({
                 onClick={handleClick}
                 >{removeFromTrackList ? "-" : "+"}</button>
         </div>
-
     )
 };
 
