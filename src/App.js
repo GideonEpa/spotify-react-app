@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState, useEffect} from 'react'
 import SearchBar from './Components/SearchBar.js';
 import SearchResults from './Components/SearchResults.js';
-import TrackList from './Components/TrackList.js' 
+import TrackList from './Components/TrackList.js'; 
 import Login from './Components/Login.js';
 import PlaylistList from './Components/PlaylistList.js';
 
