@@ -1,5 +1,5 @@
 const clientId = 'c9ed8bd9d88641029f0d3ec68fec3403'; // your clientId
-const redirectUrl = 'https://localhost:3000/';        // your redirect URL - must be localhost URL and/or HTTPS
+const redirectUrl = 'https://gideon-spotify-react-project.netlify.app/';        // your redirect URL - must be localhost URL and/or HTTPS
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
