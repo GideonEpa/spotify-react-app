@@ -1,7 +1,6 @@
 import Track from './Track.js';
 import styles from '../Modules/TrackList.module.css';
 
-
 function TrackList({
     trackList, 
     removeFromTrackList,
