@@ -6,6 +6,7 @@ import TrackList from './Components/TrackList.js'
 import Login from './Components/Login.js';
 import PlaylistList from './Components/PlaylistList.js';
 
+// Import spotify methods from spotify.js
 import Spotify from './Modules/Spotify.js';
 
 
@@ -18,8 +19,8 @@ function App() {
     }
 
     // Refresh token if current token has expired
-    const currentTime = new Date().getTime()
-    if(currentTime > new Date(localStorage.getItem('expires')).getTime()){
+    const currentTime = new Date()
+    if(currentTime.getTime() > new Date(localStorage.getItem('expires')).getTime()){
       Spotify.refreshToken();
     }
   }, [])
