@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState, useEffect} from 'react'
 import SearchBar from './Components/SearchBar.js';
 import SearchResults from './Components/SearchResults.js';
-import TrackList from './Components/TrackList.js'; 
+import Tracklist from './Components/Tracklist.js'; 
 import Login from './Components/Login.js';
 import PlaylistList from './Components/PlaylistList.js';
 
@@ -168,7 +168,7 @@ function App() {
           addToTrackList={addToTrackList}
           searchResults={searchResults}
           />
-        <TrackList 
+        <Tracklist 
           trackList={trackList} 
           removeFromTrackList={removeFromTrackList} 
           savePlaylist={savePlaylist}

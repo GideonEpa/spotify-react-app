@@ -2,7 +2,7 @@ import React from 'react';
 import Track from './Track.js';
 import styles from '../Modules/TrackList.module.css';
 
-function TrackList({
+function Tracklist({
     trackList, 
     removeFromTrackList,
     savePlaylist,
@@ -34,4 +34,4 @@ function TrackList({
     )
 };
 
-export default TrackList;
+export default Tracklist;
